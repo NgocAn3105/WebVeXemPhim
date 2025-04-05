@@ -13,7 +13,14 @@ router.post("/booking_seat", Admincontrolers.booking_seat);
 
 router.post("/add/service_one", Admincontrolers.addOneService);
 router.post("/add/service_many", Admincontrolers.addManyServices);
+router.get("/list-services/combo", Admincontrolers.List_services_combo);
+router.get("/list-services", Admincontrolers.List_services);
+
+
+router.post('/list-schedule', Admincontrolers.list_schedule);
 router.post('/add/schedule', Admincontrolers.addSchedule);
 router.delete('/delete/schedule', Admincontrolers.deleteSchedule);
 
+
+router.post("/list-movies", Admincontrolers.ListMovies);
 module.exports = router;

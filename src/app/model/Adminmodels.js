@@ -115,8 +115,15 @@ class AdminModel {
       return { status: 500, message: " Loi he thong " + E };
     }
   }
-
-
+  // hien thi dịch vụ
+  static async List_services_combo() {
+    const [services] = await db.query("SELECT * FROM `services` WHERE `name` LIKE '%combo%' ");
+    return { status: 200, message: services };
+  }
+  static async List_services() {
+    const [services] = await db.query("SELECT * FROM `services` WHERE `name` NOT LIKE '%combo%'");
+    return { status: 200, message: services };
+  }
   //  schedule lich chieu phim
   static async Add_schedule(schedule) {
     const { movie_id, room_id, schedule_date, schedule_start, schedule_end } = schedule;
@@ -149,7 +156,29 @@ class AdminModel {
     }
   }
 
+  static async List_schedule(schedule_date) {
+    try {
+      const [schedule] = await db.query(`
+        select sch.schedule_id,sch.schedule_date,r.room_id,c.cinema_id,c.cinema_name,m.movie_name
+        from schedule as sch 
+        join 
+          movies as m on m.movie_id=sch.movie_id
+        join 
+          room as r on sch.room_id=r.room_id
+        join 
+          cinemas as c on r.cinema_id = c.cinema_id
+        where 
+          sch.schedule_date=?`, [schedule_date]);
 
+      if (schedule.length === 0) return { status: 404, message: "Date Not Found Schedule!" }
+      return { status: 200, message: schedule }
+    } catch (e) {
+      return {
+        status: 500,
+        message: "Error : " + e
+      };
+    }
+  }
   // booking
 
   // xem tinh trang ve cua rap 
@@ -252,7 +281,18 @@ class AdminModel {
     }
   }
 
+  static async get_name_seat(seat_id) {
+    const [rows] = await db.query(
+      "SELECT concat(seat_row, number) AS seat_name FROM seats WHERE seat_id = ?",
+      [seat_id]
+    );
 
+    if (rows.length === 0) {
+      return null;
+    }
+
+    return rows[0].seat_name;
+  }
 
 
 
@@ -295,7 +335,19 @@ class AdminModel {
     }
   }
 
+  // danh sach phim
 
+  static async GetListMovies(limit) {
+    try {
+      const [movies] = await db.query("select * from movies limit ?", [limit || 5]);
+      return { status: 200, find: movies.length, message: movies };
+    } catch (e) {
+      return {
+        status: 500,
+        message: "Error db: " + e
+      };
+    }
+  }
 
 
 

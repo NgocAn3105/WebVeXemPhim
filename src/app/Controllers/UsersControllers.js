@@ -2,6 +2,7 @@ const { response } = require('express');
 const usersModel = require('../model/Usersmodels');
 const sendMail = require("../modifie/Mail");
 const e = require('express');
+const UsersModel = require('../model/Usersmodels');
 class UsersControllers {
     async Signin(req, res) {
         const { username, password, birthday, email } = req.body;
@@ -21,11 +22,11 @@ class UsersControllers {
     }
 
     async Update_user(req, res) {
-        const data_user = req.body;
+        const { username, fullname, birthday, gender, city, phone } = req.body;
         const { email } = req.params;
         if (!email)
             return res.status(400).json({ message: "Email is required" });
-        const user = await usersModel.UpdateUserModel(data_user, email);
+        const user = await usersModel.UpdateUserModel(username, fullname, birthday, gender, city, phone, email);
         return res.json({ user });
     }
 
@@ -33,10 +34,18 @@ class UsersControllers {
         const { email, password } = req.body;
         if (!email || !password)
             return res.status(400).json({ message: "Email is required" });
-        const user = await usersModel.UpdatePasswordUserModelUserModel(email, password);
+        const user = await usersModel.UpdatePasswordUserModel(email, password);
         return res.json({ user });
     }
 
+
+    async Info_user(req, res) {
+        const { email } = req.body;
+        if (!email) return res.json({ status: 400, message: "Missing require !" });
+
+        const user = await UsersModel.InfoUser(email);
+        return res.json({ user });
+    }
 
 
 }
