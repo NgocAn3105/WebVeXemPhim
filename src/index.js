@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const path = require("path");
 
-const port = 3000;
+const port = const port = process.env.PORT || 5000;;
 const app = express();
 const route = require("./routes");
 
