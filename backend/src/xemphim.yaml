@@ -1,0 +1,1076 @@
+openapi: 3.0.4
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+
+    Some useful links:
+    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.12
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+servers:
+  - url: http://localhost:5000
+tags:
+  - name: Admin
+    description: All of info about function of admin
+  - name: User
+    description: Info about function of user
+paths:
+  /Admin/search/cinemas:
+    post:
+      tags:
+        - Admin
+      summary: info about cinemas by name cinemas
+      description: return info cinemas with name get by cinemas name in body
+      operationId: search_cinemas
+      requestBody:
+        description: info name cinemas
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cinema_name:
+                  type: string
+                  example: cgv
+        required: true
+      responses:
+        "200":
+          description: Search Succesful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cinemas:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: 200
+                      message:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cinema_id:
+                              type: integer
+                              example: 1
+                            cinema_name:
+                              type: string
+                              example: "CGV Vincom Center Landmark 81"
+                            cinema_address:
+                              type: string
+                              example: "208 Nguyễn Hữu Cảnh, Phường 22"
+                            district:
+                              type: string
+                              example: "Bình Thạnh"
+
+        "400":
+          description: invalid input
+
+  /Admin/search/cinemas-district:
+    post:
+      tags:
+        - Admin
+      summary: info about cinemas by name cinemas and district
+      description: return info cinemas with name get by cinemas name and district in body
+      operationId: search_cinemas-district
+      requestBody:
+        description: District cinemas information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cinema_name:
+                  type: string
+                  example: cgv
+                district:
+                  type: string
+                  example: quan 1
+        required: true
+      responses:
+        "200":
+          description: Search Succesful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cinemas:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: 200
+                      message:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cinema_id:
+                              type: integer
+                              example: 15
+                            cinema_name:
+                              type: string
+                              example: "CGV Liberty Citypoint"
+                            cinema_address:
+                              type: string
+                              example: "Tầng M – 1, Khách sạn Liberty Center, 59 – 61 Pasteur"
+                            district:
+                              type: string
+                              example: "Quận 1"
+
+        "400":
+          description: invalid input
+
+  /Admin/cinemas-movies:
+    post:
+      tags:
+        - Admin
+      summary: List Cinemas by movie and schedule date
+      description: return cinemas infomation by movie and schedule date
+      operationId: cinemas-movies
+      requestBody:
+        description: movie and schedule date infomation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                movie_id:
+                  type: integer
+                  example: 120
+                schedule_date:
+                  type: string
+                  example: "2025-04-06"
+        required: true
+      responses:
+        "200":
+          description: Get Succesful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cinemas:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: 200
+                      message:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cinema_id:
+                              type: integer
+                              example: 2
+                            cinema_name:
+                              type: string
+                              example: "CGV Su Van Hanh"
+                            schedule_id:
+                              type: integer
+                              example: 1
+
+        "400":
+          description: invalid input
+
+  /Admin/Room-showtime:
+    post:
+      tags:
+        - Admin
+      summary: list schedule time about movie
+      description: return information list schedule time about movie
+      operationId: Room-showtime
+      requestBody:
+        description: info schedule time of movie
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cinema_id:
+                  type: integer
+                  example: 2
+                schedule_id:
+                  type: integer
+                  example: 1
+        required: true
+      responses:
+        "200":
+          description: Get Succesful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: 200
+                      message:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            room_id:
+                              type: integer
+                              example: 4
+                            room_name:
+                              type: string
+                              example: "1"
+                            schedule_start:
+                              type: string
+                              example: "17:00:00"
+                            schedule_id:
+                              type: integer
+                              example: 1
+
+        "400":
+          description: invalid input
+
+  /Admin/Room-showtime-bycinema:
+    post:
+      tags:
+        - Admin
+      summary: the desired list of cinemas
+      description: Returns the desired list of cinemas
+      operationId: Room-showtime-bycinema
+      requestBody:
+        description: info the desired list of cinemas
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cinema_id:
+                  type: integer
+                  example: 120
+                schedule_date:
+                  type: string
+                  example: "2025-04-06"
+                cinema_name:
+                  type: string
+                  example: "CGV"
+        required: true
+      responses:
+        "200":
+          description: Get Succesful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rooms:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: 200
+                      message:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cinema_id:
+                              type: integer
+                              example: 2
+                            cinema_name:
+                              type: string
+                              example: "CGV Su Van Hanh"
+                            schedule_id:
+                              type: integer
+                              example: 1
+
+        "400":
+          description: invalid input
+
+  /Admin/checking-seats:
+    post:
+      tags:
+        - Admin
+      summary: Check seat availability
+      description: return list Check seat availability
+      operationId: Checking-seats
+      requestBody:
+        description: status seating information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_id:
+                  type: integer
+                  example: 1
+                room_id:
+                  type: integer
+                  example: 4
+        required: true
+      responses:
+        "200":
+          description: Get Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schedule:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            seat_id:
+                              type: integer
+                              example: 265
+                            seat:
+                              type: string
+                              example: "a1"
+                            seat_status:
+                              type: string
+                              example: "yes"
+        "400":
+          description: invalid input
+
+  /Admin/booking_seat:
+    post:
+      tags:
+        - Admin
+      summary: Booking seat ticket
+      description: return information Succesful ticket
+      operationId: booking_seat
+      requestBody:
+        description: information booking ticket
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                info:
+                  type: object
+                  example:
+                    user_id: 1
+                    schedule_id: 2
+                    seat_id: 364
+                    price: 75000
+                    seat_status: 1
+                    room_id: 5
+                    services:
+                      - service_id: 1
+                        quantity: 1
+                    email: "ngocancd2020@gmail.com"
+        required: true
+      responses:
+        "200":
+          description: booking Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sticket:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        example: "Ticket booked successfully!"
+        "400":
+          description: invalid input
+
+  /Admin/info-seats:
+    post:
+      tags:
+        - Admin
+      summary: ticket information by user after booking
+      description: return list information ticket
+      operationId: info-seats
+      requestBody:
+        description: ticket user information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                booking_id:
+                  type: integer
+                  example: 9
+                user_id:
+                  type: integer
+                  example: 1
+        required: true
+      responses:
+        "200":
+          description: Get Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            username:
+                              type: string
+                              example: "ngocan"
+                            seat:
+                              type: string
+                              example: "a7"
+                            movie_name:
+                              type: string
+                              example: "Chúa Tể Của Những Chiếc Nhẫn: Hiệp Hội Nhẫn Thần"
+                            sticket_price:
+                              type: integer
+                              example: 80000
+                            price_food:
+                              type: integer
+                              example: 45000
+                            totally:
+                              type: integer
+                              example: 125000
+
+        "400":
+          description: invalid input
+
+  /Admin/add/service_one:
+    post:
+      tags:
+        - Admin
+      summary: Add Service
+      description: Add service in system
+      operationId: add-service_one
+      requestBody:
+        description: add once service in system
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Bắp rang"
+                price:
+                  type: integer
+                  example: 45000
+                description:
+                  type: string
+                  example: "nước ngọt dạng ly"
+        required: true
+      responses:
+        "200":
+          description: Get Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "add service success!"
+
+        "400":
+          description: invalid input
+
+  /Admin/add/service_many:
+    post:
+      tags:
+        - Admin
+      summary: Add Many Service
+      description: Add Many service in system
+      operationId: add-service_many
+      requestBody:
+        description: add many service in system
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                services:
+                  example:
+                    - name: "Product 1"
+                      price: 10000
+                      description: "Description for Product 1"
+                    - name: "Product 2"
+                      price: 20000
+                      description: "Description for Product 2"
+                    - name: "Product 3"
+                      price: 30000
+                      description: "Description for Product 3"
+        required: true
+      responses:
+        "200":
+          description: Get Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "add services successful!"
+
+        "400":
+          description: invalid input
+
+  /Admin/list-services/combo:
+    get:
+      tags:
+        - Admin
+      summary: List services has information about combo
+      description: return List services has information about combo
+      operationId: list-services-combo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          description: Get Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  services:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        example:
+                          - service_id: 2
+                            name: "Combo bắp + nước"
+                            price: 45000
+                            description: "combo bắp và nước bất kỳ"
+
+        "400":
+          description: invalid input
+
+  /Admin/list-services:
+    get:
+      tags:
+        - Admin
+      summary: List services has information about normal
+      description: return List services has information about normal
+      operationId: list-services-normal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          description: Get Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  services:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        example:
+                          - service_id: 1
+                            name: "khong su dung"
+                            price: 0
+                            description: "0"
+                          - service_id: 3
+                            name: "nước ngọt"
+                            price: 40000
+                            description: "nước ngọt dạng ly"
+
+        "400":
+          description: invalid input
+
+  /Admin/list-schedule:
+    post:
+      tags:
+        - Admin
+      summary: list schedule information
+      description: return list schedule information
+      operationId: list-schedule
+      requestBody:
+        description: schedule date information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_date:
+                  type: string
+                  example: "2025-04-06"
+        required: true
+      responses:
+        "200":
+          description: Get Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schedules:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        example:
+                          - schedule_id: 1
+                            schedule_date: "2025-04-05T17:00:00.000Z"
+                            room_id: 4
+                            cinema_id: 2
+                            cinema_name: "CGV Su Van Hanh"
+                            movie_name: "Chúa Tể Của Những Chiếc Nhẫn: Hiệp Hội Nhẫn Thần"
+                          - schedule_id: 2
+                            schedule_date: "2025-04-05T17:00:00.000Z"
+                            room_id: 5
+                            cinema_id: 2
+                            cinema_name: "CGV Su Van Hanh"
+                            movie_name: "Shrek"
+        "400":
+          description: invalid input
+
+  /Admin/add/schedule:
+    post:
+      tags:
+        - Admin
+      summary: add new schedule
+      description: add new schedule in system
+      operationId: add-schedule
+      requestBody:
+        description: schedule information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                movie_id:
+                  type: integer
+                  example: 549509
+                room_id:
+                  type: integer
+                  example: 22
+                schedule_date:
+                  type: string
+                  example: "2025-04-10"
+                schedule_start:
+                  type: string
+                  example: "14:00"
+                schedule_end:
+                  type: string
+                  example: "16:30"
+        required: true
+      responses:
+        "200":
+          description: add Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schedules:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "add schedule Success!"
+
+        "400":
+          description: invalid input
+
+  /Admin/delete/schedule:
+    delete:
+      tags:
+        - Admin
+      summary: delete schedule
+      description: delete schedule in system
+      operationId: delete-schedule
+      requestBody:
+        description: schedule_id information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_id:
+                  type: integer
+                  example: 3
+        required: true
+      responses:
+        "200":
+          description: delete Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schedules:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "Delete schedule Success!"
+
+        "400":
+          description: invalid input
+
+  /Admin/list-movies:
+    post:
+      tags:
+        - Admin
+      summary: list movies
+      description: return list movies with limit
+      operationId: list-movies
+      requestBody:
+        description: limit information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                  example: 2
+        required: true
+      responses:
+        "200":
+          description: add Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  movies:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      find:
+                        type: integer
+                        example: 2
+                      message:
+                        example:
+                          - movie_id: 120
+                            movie_name: "Chúa Tể Của Những Chiếc Nhẫn: Hiệp Hội Nhẫn Thần"
+                            movie_description: "Chiếc nhẫn chúa mang sức mạnh bá chủ vô tình được số phận đưa vào tay chàng hobbit trẻ tuổi Frodo. Khi thày phù thủy Gandalf phát hiện ra chiếc nhẫn này đã từng thuộc về bạo chúa Sauron, Frodo phải nhận nhiệm vụ mang nhẫn tới khe núi Hủy diệt để tiêu hủy nó.  Không đơn độc trong hành trình gian khó, Frodo còn tiếp nhận những người đồng hành thuộc các tộc khác nhau: Legolas tộc Elf; Gimli tộc Dwarf; Aragon, Boromir và ba người bạn Hobbit trung thành..."
+                            movie_trailer: null
+                            movie_cens: null
+                            movie_genres: "12, 14, 28"
+                            movie_release: "2001-12-17T17:00:00.000Z"
+                            movie_length: null
+                            movie_format: null
+                            movie_poster: "https://image.tmdb.org/t/p/w500/2gayIj5yIrvk7BVXUCXHHIomXgR.jpg"
+
+                          - movie_id: 122
+                            movie_name: "Chúa Tể Của Những Chiếc Nhẫn: Sự Trở Lại Của Nhà Vua"
+                            movie_description: "Sauron huy động toàn lực cho trận chiến khốc liệt cuối cùng, tấn công vào Gondor – vùng đất huyết mạch của loài người. Gondor dưới sự lãnh đạo của vị vua nhu nhược trở nên quá mong manh và nguy ngập. Đó chính là lúc những người anh hùng phát huy hết khả năng của mình. Cùng với sự hỗ trợ của các chiến binh Rohan, lực lượng những hồn ma bị nguyền rủa trong khe núi, Aragorn đã thống lĩnh những người Gondor chống lại Sauron, anh đã thực hiện sứ mệnh mà số phận giao phó cho mình, Aragorn sinh ra để trở thành Vua của Gondor, anh đã chứng minh điều đó. Cùng lúc đó, Frodo và Sam tiếp tục dấn sâu vào vùng đất ma quỷ đầy hiểm nguy để thực thi sứ mạng của mình, sứ mạng tiêu hủy Chiếc Nhẫn Quyền Lực. Có thể nói Sự Trở Lại Của Nhà Vua Phim là phần có nội dung hấp dẫn cùng những màn chiến đấu cực hay, cực kỳ hoành tráng."
+                            movie_trailer: null
+                            movie_cens: null
+                            movie_genres: "12, 14, 28"
+                            movie_release: "2003-12-16T17:00:00.000Z"
+                            movie_length: null
+                            movie_format: null
+                            movie_poster: "https://image.tmdb.org/t/p/w500/3Y6eymGHCfQkDKU6rev2WiqXMci.jpg"
+        "400":
+          description: invalid input
+
+  /user/sigin:
+    post:
+      tags:
+        - User
+      summary: Sign in user
+      description: Sign in user in system
+      operationId: sigin
+      requestBody:
+        description: sigin user information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "anh duy"
+                password:
+                  type: string
+                  example: "123456"
+                birthday:
+                  type: string
+                  example: "2003-04-23"
+                email:
+                  type: string
+                  example: "ngocancd2020@gmail.com"
+        required: true
+      responses:
+        "200":
+          description: sigin Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "Signin Success!"
+
+        "400":
+          description: invalid input
+
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: login in user
+      description: login in user in system
+      operationId: login
+      requestBody:
+        description: login user information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "ngocancd2020@gmail.com"
+                password:
+                  type: string
+                  example: "123456"
+        required: true
+      responses:
+        "200":
+          description: login Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "Login Success!"
+
+        "400":
+          description: invalid input
+
+  /user/update/pasword:
+    post:
+      tags:
+        - User
+      summary: update-pasword user
+      description: update-pasword user in system
+      operationId: update-pasword
+      requestBody:
+        description: update-pasword user information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "ngocancd2020@gmail.com"
+                password:
+                  type: string
+                  example: "anhduy"
+        required: true
+      responses:
+        "200":
+          description: update Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "Update Successful!"
+
+        "400":
+          description: invalid input
+
+  /user/update/user/{email}:
+    post:
+      tags:
+        - User
+      summary: update user
+      description: update user in system
+      operationId: update
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "ngocancd2020@gmail.com"
+      requestBody:
+        description: update user information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "anh duy"
+                fullname:
+                  type: string
+                  example: "do ngoc anh duy"
+                birthday:
+                  type: string
+                  example: "2003-04-23"
+                gender:
+                  type: string
+                  example: "1"
+                city:
+                  type: string
+                  example: "quan 10"
+                phone:
+                  type: string
+                  example: "0912345678"
+        required: true
+      responses:
+        "200":
+          description: update Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        type: string
+                        example: "Update Successful!"
+
+        "400":
+          description: invalid input
+
+  /user/info-user:
+    post:
+      tags:
+        - User
+      summary: info user
+      description: info user in system
+      operationId: info-user
+      requestBody:
+        description: update user information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "ngocancd2020@gmail.com"
+        required: true
+      responses:
+        "200":
+          description: update Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "200"
+                      message:
+                        example:
+                          - user_id: 2
+                            username: "anh duy"
+                            password: "123456"
+                            avatar: null
+                            fullname: "do ngoc anh duy"
+                            birthday: "2003-04-22T17:00:00.000Z"
+                            gender: 1
+                            email: "ngocancd2020@gmail.com"
+                            city: "quan 10"
+                            phone: "0912345678"
+                            point: 0
+
+        "400":
+          description: invalid input
